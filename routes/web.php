@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/index','TestController@valid');
+Route::post('/index','TestController@wxEvent');
+//获取access_token
+Route::get('/index/getaccess_token','TestController@getAccesstoken');
+//获取用户信息
+Route::get('/index/getUserInfo','TestController@getUserInfo');
