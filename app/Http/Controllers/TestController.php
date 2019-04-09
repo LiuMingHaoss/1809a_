@@ -39,6 +39,6 @@ class TestController extends Controller
         $access_token=$this->getAccesstoken();
         $userInfo=file_get_contents('https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid=og1Jd1KlcDOxObfJuCnzCe5-CZ68&lang=zh_CN');
         $arr=json_decode($userInfo,true);
-        print_r($arr);
+        var_dump($arr);
     }
 }
