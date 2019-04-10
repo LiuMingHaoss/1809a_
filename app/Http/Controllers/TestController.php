@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     //
@@ -17,9 +18,16 @@ class TestController extends Controller
         $data=simplexml_load_string($content);
         $openid=$data->FromUserName;
         $userInfo=$this->getUserInfo($openid);
-        var_dump($userInfo);
-
-        die;
+        $info=[
+            'openid'=>$userInfo['openid'],
+            'nickname'=>$userInfo['nickname'],
+            'sex'=>$userInfo['sex'],
+            'country'=>$userInfo['country'],
+            'province'=>$userInfo['province'],
+            'city'=>$userInfo['city'],
+            'subscribe_time'=>$userInfo['subscribe_time'],
+        ];
+        DB::table('user')->insert($info);
         $time =date('Y-m-d H:i:s');
         $str =$time . $content . "\n";
         is_dir('logs')or mkdir('logs',0777,true);
