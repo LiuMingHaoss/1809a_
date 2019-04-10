@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     //
@@ -15,6 +14,12 @@ class TestController extends Controller
     public function wxEvent(){
 
         $content=file_get_contents('php://input');
+        $data=simplexml_load_string($content);
+        $openid=$data->FromUserName;
+        $userInfo=$this->getUserInfo($openid);
+        var_dump($userInfo);
+
+        die;
         $time =date('Y-m-d H:i:s');
         $str =$time . $content . "\n";
         is_dir('logs')or mkdir('logs',0777,true);
@@ -37,10 +42,10 @@ class TestController extends Controller
     }
 
     //获取用户信息
-    public function getUserInfo(){
+    public function getUserInfo($openid){
         $access_token=$this->getAccesstoken();
-        $userInfo=file_get_contents('https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid=og1Jd1KlcDOxObfJuCnzCe5-CZ68&lang=zh_CN');
+        $userInfo=file_get_contents('https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN');
         $arr=json_decode($userInfo,true);
-        echo '<pre>';print_r($arr);echo '<pre>';
+        return $arr;
     }
 }
