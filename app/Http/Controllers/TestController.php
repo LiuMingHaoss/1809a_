@@ -15,23 +15,35 @@ class TestController extends Controller
     public function wxEvent(){
 
         $content=file_get_contents('php://input');
-        $data=simplexml_load_string($content);
-        $openid=$data->FromUserName;
-        $userInfo=$this->getUserInfo($openid);
-        $info=[
-            'openid'=>$userInfo['openid'],
-            'nickname'=>$userInfo['nickname'],
-            'sex'=>$userInfo['sex'],
-            'country'=>$userInfo['country'],
-            'province'=>$userInfo['province'],
-            'city'=>$userInfo['city'],
-            'subscribe_time'=>$userInfo['subscribe_time'],
-        ];
-        DB::table('user')->insert($info);
         $time =date('Y-m-d H:i:s');
         $str =$time . $content . "\n";
         is_dir('logs')or mkdir('logs',0777,true);
         file_put_contents("logs/wx_event.log",$str,FILE_APPEND);
+        $data=simplexml_load_string($content);
+        $wx_id =$data->ToUserName;  //公众号id
+        $event=$data->Event; //事件类型
+        $openid=$data->FromUserName;
+        if($event=='subscribe'){
+            $local_user=DB::table('user')->where(['openid'=>$openid])->first();
+            if($local_user){
+                echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user['nickname'] .']]></Content></xml>';
+            }else{
+                $userInfo=$this->getUserInfo($openid);
+                $info=[
+                    'openid'=>$userInfo['openid'],
+                    'nickname'=>$userInfo['nickname'],
+                    'sex'=>$userInfo['sex'],
+                    'country'=>$userInfo['country'],
+                    'province'=>$userInfo['province'],
+                    'city'=>$userInfo['city'],
+                    'subscribe_time'=>$userInfo['subscribe_time'],
+                ];
+                DB::table('user')->insert($info);
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎关注 '. $userInfo['nickname'] .']]></Content></xml>';
+            }
+        }
+
+
         echo "SUCCESS";
     }
     //获取微信 AccessToken
