@@ -84,18 +84,17 @@ class TestController extends Controller
           'button'=>[
               [
                   'type'=>'click',
-                  'name'=>'1809a',
+                  'name'=>'点击有惊喜',
                   'key'=>'key_menu_001'
               ],
               [
               'type'=>'click',
-              'name'=>'1809aaaaa',
+              'name'=>'目录',
               'key'=>'key_menu_002'
               ],
           ]
         ];
         $json_str=json_encode($post_arr,JSON_UNESCAPED_UNICODE);
-
         //发送请求
         $clinet=new Client();
         $response=$clinet->request('POST',$url,[
