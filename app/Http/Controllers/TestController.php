@@ -17,8 +17,8 @@ class TestController extends Controller
         $content=file_get_contents('php://input');
         $time =date('Y-m-d H:i:s');
         $str =$time . $content . "\n";
-//        is_dir('logs')or mkdir('logs',0777,true);
-//        file_put_contents("logs/wx_event.log",$str,FILE_APPEND);
+        is_dir('logs')or mkdir('logs',0777,true);
+        file_put_contents("logs/wx_event.log",$str,FILE_APPEND);
         $data=simplexml_load_string($content);
         $wx_id =$data->ToUserName;  //公众号id
         $event=$data->Event; //事件类型

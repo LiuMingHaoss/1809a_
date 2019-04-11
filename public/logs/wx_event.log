@@ -1,0 +1,100 @@
+2019-04-11 10:31:58<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554876371</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+
+2019-04-11 14:55:46<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554965746</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[unsubscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 14:56:00<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554965760</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 15:53:25<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554969205</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[unsubscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 15:53:45<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554969225</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 15:53:49<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554969228</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[view_miniprogram]]></Event>
+<EventKey><![CDATA[pages/lunar/index]]></EventKey>
+<MenuId>433424261</MenuId>
+</xml>
+2019-04-11 15:55:25<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554969325</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[unsubscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 15:56:38<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554969398</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 16:02:16<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1HtDM0K9NdrNBTJB1cbGT5s]]></FromUserName>
+<CreateTime>1554969725</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 16:11:52<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1HtDM0K9NdrNBTJB1cbGT5s]]></FromUserName>
+<CreateTime>1554970312</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[unsubscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 18:21:26<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554978086</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[unsubscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 18:21:32<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554978092</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>
+2019-04-11 18:21:34<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554978094</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[CLICK]]></Event>
+<EventKey><![CDATA[key_menu_002]]></EventKey>
+</xml>
+2019-04-11 18:21:35<xml><ToUserName><![CDATA[gh_1cf5f3436c21]]></ToUserName>
+<FromUserName><![CDATA[og1Jd1KlcDOxObfJuCnzCe5-CZ68]]></FromUserName>
+<CreateTime>1554978095</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[CLICK]]></Event>
+<EventKey><![CDATA[key_menu_001]]></EventKey>
+</xml>
