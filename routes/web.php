@@ -20,3 +20,5 @@ Route::post('/index','TestController@wxEvent');
 Route::get('/index/getaccess_token','TestController@getAccesstoken');
 //获取用户信息
 Route::get('/index/getUserInfo','TestController@getUserInfo');
+//自定义菜单
+Route::any('/index/getMenu','TestController@getMenu');
