@@ -26,7 +26,7 @@ class TestController extends Controller
         if($event=='subscribe'){
             $local_user=DB::table('user')->where(['openid'=>$openid])->first();
             if($local_user){
-                echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user['nickname'] .']]></Content></xml>';
+                echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user->nickname .']]></Content></xml>';
             }else{
                 $userInfo=$this->getUserInfo($openid);
                 $info=[
@@ -37,8 +37,14 @@ class TestController extends Controller
                     'province'=>$userInfo['province'],
                     'city'=>$userInfo['city'],
                     'subscribe_time'=>$userInfo['subscribe_time'],
+                    'headimgurl'=>$userInfo['headimgurl'],
                 ];
-                DB::table('user')->insert($info);
+                $res=DB::table('user')->insert($info);
+                if($res){
+                    echo '添加成功';
+                }else{
+                    echo '添加失败';
+                }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎关注 '. $userInfo['nickname'] .']]></Content></xml>';
             }
         }
