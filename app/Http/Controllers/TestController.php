@@ -16,15 +16,22 @@ class TestController extends Controller
     public function wxEvent(){
 
         $content=file_get_contents('php://input');
+
+        //记录日志
         $time =date('Y-m-d H:i:s');
         $str =$time . $content . "\n";
         is_dir('logs')or mkdir('logs',0777,true);
         file_put_contents("logs/wx_event.log",$str,FILE_APPEND);
+
+        //解析XML 将xml字符串转化为对象
         $data=simplexml_load_string($content);
-        $wx_id =$data->ToUserName;  //公众号id
-        $event=$data->Event; //事件类型
-        $openid=$data->FromUserName;
-        if($event=='subscribe'){
+
+        $wx_id =$data->ToUserName;      //公众号id
+        $event=$data->Event;            //事件类型
+        $openid=$data->FromUserName;    //用户openid
+
+
+        if($event=='subscribe'){        //用户关注事件
             $local_user=DB::table('user')->where(['openid'=>$openid])->first();
             if($local_user){
                 echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user->nickname .']]></Content></xml>';
@@ -47,6 +54,24 @@ class TestController extends Controller
                     echo '添加失败';
                 }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎关注 '. $userInfo['nickname'] .']]></Content></xml>';
+            }
+        }else if(isset($data->MsgType)){
+            if($data->MsgType=='text'){
+                $userInfo=$this->getUserInfo($openid);
+                $Content=$data->Content;
+                $info=[
+                  'openid'=>$userInfo['openid'],
+                  'nickname'=>$userInfo['nickname'],
+                  'content'=>$Content,
+                    'create_time'=>$data->CreateTime,
+                ];
+                $res=DB::table('wx_text')->insert($info);
+                if($res){
+                    echo '信息入库成功';
+                }else{
+                    echo '信息入库失败';
+                }
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '别bb了 '. $userInfo['nickname'] .']]></Content></xml>';
             }
         }
 
