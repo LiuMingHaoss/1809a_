@@ -56,7 +56,7 @@ class TestController extends Controller
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎关注 '. $userInfo['nickname'] .']]></Content></xml>';
             }
         }else if(isset($data->MsgType)){
-            if($data->MsgType=='text'){
+            if($data->MsgType=='text'){     //用户发送文字信息
                 $userInfo=$this->getUserInfo($openid);
                 $Content=$data->Content;
                 $info=[
@@ -72,6 +72,40 @@ class TestController extends Controller
                     echo '信息入库失败';
                 }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '别bb了 '. $userInfo['nickname'] .']]></Content></xml>';
+            }else if($data->MsgType=='image'){         //用户发送图片
+                //请求地址
+                $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
+                //接口数据
+                $clinet=new Client();
+                $response=$clinet->request('GET',$url,[
+                    'body'=>'curl -I -G "https://api.weixin.qq.com/cgi-bin/media/get?access_token=20__R05Ihvo5c_sqtzu-YLGtWQD4IOdgZa9sjM3-Wk0fqTHN3XQk2ZxW7y43GiQmz9jg_JBXYtEBAOht2fjML-baDw8suZOk8yO6cQM1WqRuXZGRPPTIP14ky_MVy3f5dF2nSpLoPh72PLKn-iWHQOfAGAVEC&media_id=66uRMz9w70hqZsOY1UhKeSGiXM8tBqMnRXKuGJ4CeGUcD7a53pGkP8LXCBCg0RfC"'
+                ]);
+
+                //获取文件名称
+                $file_info=$response->getHeader('Content-disposition');
+                $file_name = substr(rtrim($file_info[0],'"'),-20);
+
+                //存入文件夹
+                $image=$response->getBody();
+                is_dir('wx_media/image')or mkdir('wx_media/image',0777,true);
+                file_put_contents("wx_media/image/".$file_name."",$image,FILE_APPEND);
+            }else if($data->MsgType=='voice'){      //用户发送语音
+                //请求地址
+                $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
+                //接口数据
+                $clinet=new Client();
+                $response=$clinet->request('GET',$url,[
+                    'body'=>'curl -I -G "https://api.weixin.qq.com/cgi-bin/media/get?access_token=20__R05Ihvo5c_sqtzu-YLGtWQD4IOdgZa9sjM3-Wk0fqTHN3XQk2ZxW7y43GiQmz9jg_JBXYtEBAOht2fjML-baDw8suZOk8yO6cQM1WqRuXZGRPPTIP14ky_MVy3f5dF2nSpLoPh72PLKn-iWHQOfAGAVEC&media_id=66uRMz9w70hqZsOY1UhKeSGiXM8tBqMnRXKuGJ4CeGUcD7a53pGkP8LXCBCg0RfC"'
+                ]);
+
+                //获取文件名称
+                $file_info=$response->getHeader('Content-disposition');
+                $file_name = substr(rtrim($file_info[0],'"'),-20);
+
+                //存入文件夹
+                $image=$response->getBody();
+                is_dir('wx_media/voice')or mkdir('wx_media/voice',0777,true);
+                file_put_contents("wx_media/voice/".$file_name."",$image,FILE_APPEND);
             }
         }
 
