@@ -89,6 +89,8 @@ class TestController extends Controller
                 $image=$response->getBody();
                 is_dir('wx_media/image')or mkdir('wx_media/image',0777,true);
                 file_put_contents("wx_media/image/".$file_name."",$image,FILE_APPEND);
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'图片不错 '.']]></Content></xml>';
+
             }else if($data->MsgType=='voice'){      //用户发送语音
                 //请求地址
                 $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
@@ -106,6 +108,8 @@ class TestController extends Controller
                 $image=$response->getBody();
                 is_dir('wx_media/voice')or mkdir('wx_media/voice',0777,true);
                 file_put_contents("wx_media/voice/".$file_name."",$image,FILE_APPEND);
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'说话大点声 '.']]></Content></xml>';
+
             }
         }
 
