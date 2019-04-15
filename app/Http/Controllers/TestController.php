@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
+
 class TestController extends Controller
 {
     //
@@ -36,6 +38,7 @@ class TestController extends Controller
             if($local_user){
                 echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user->nickname .']]></Content></xml>';
             }else{
+                //获取用户信息
                 $userInfo=$this->getUserInfo($openid);
                 $info=[
                     'openid'=>$userInfo['openid'],
@@ -47,6 +50,8 @@ class TestController extends Controller
                     'subscribe_time'=>$userInfo['subscribe_time'],
                     'headimgurl'=>$userInfo['headimgurl'],
                 ];
+
+                //用户信息入库
                 $res=DB::table('user')->insert($info);
                 if($res){
                     echo '添加成功';
@@ -77,18 +82,33 @@ class TestController extends Controller
                 $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
                 //接口数据
                 $clinet=new Client();
-                $response=$clinet->request('GET',$url,[
-                    'body'=>'curl -I -G "https://api.weixin.qq.com/cgi-bin/media/get?access_token=20__R05Ihvo5c_sqtzu-YLGtWQD4IOdgZa9sjM3-Wk0fqTHN3XQk2ZxW7y43GiQmz9jg_JBXYtEBAOht2fjML-baDw8suZOk8yO6cQM1WqRuXZGRPPTIP14ky_MVy3f5dF2nSpLoPh72PLKn-iWHQOfAGAVEC&media_id=66uRMz9w70hqZsOY1UhKeSGiXM8tBqMnRXKuGJ4CeGUcD7a53pGkP8LXCBCg0RfC"'
-                ]);
+                $response=$clinet->request('GET',$url);
 
                 //获取文件名称
                 $file_info=$response->getHeader('Content-disposition');
-                $file_name = substr(rtrim($file_info[0],'"'),-20);
+                $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
+                $file_newname = $file_name.'_'.substr(rtrim($file_info[0],'"'),-20);
 
-                //存入文件夹
+                //保存图片
                 $image=$response->getBody();
-                is_dir('wx_media/image')or mkdir('wx_media/image',0777,true);
-                file_put_contents("wx_media/image/".$file_name."",$image,FILE_APPEND);
+                $wx_image_path = 'wx_media/images/'.$file_newname;
+                $rr = Storage::disk('local')->put($wx_image_path,$image);
+                var_dump($rr);
+
+                //图片信息入库
+                $userInfo=$this->getUserInfo($openid);
+                $info=[
+                    'openid'=>$userInfo['openid'],
+                    'create_time'  => time(),
+                    'msg_type'  => 'image',
+                    'image_path'=>$wx_image_path
+                ];
+                $res=DB::table('wx_image')->insert($info);
+                if($res){
+                    echo '图片信息入库成功';
+                }else{
+                    echo '图片信息入库失败';
+                }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'图片不错 '.']]></Content></xml>';
 
             }else if($data->MsgType=='voice'){      //用户发送语音
@@ -96,18 +116,33 @@ class TestController extends Controller
                 $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
                 //接口数据
                 $clinet=new Client();
-                $response=$clinet->request('GET',$url,[
-                    'body'=>'curl -I -G "https://api.weixin.qq.com/cgi-bin/media/get?access_token=20__R05Ihvo5c_sqtzu-YLGtWQD4IOdgZa9sjM3-Wk0fqTHN3XQk2ZxW7y43GiQmz9jg_JBXYtEBAOht2fjML-baDw8suZOk8yO6cQM1WqRuXZGRPPTIP14ky_MVy3f5dF2nSpLoPh72PLKn-iWHQOfAGAVEC&media_id=66uRMz9w70hqZsOY1UhKeSGiXM8tBqMnRXKuGJ4CeGUcD7a53pGkP8LXCBCg0RfC"'
-                ]);
+                $response=$clinet->request('GET',$url);
 
                 //获取文件名称
                 $file_info=$response->getHeader('Content-disposition');
-                $file_name = substr(rtrim($file_info[0],'"'),-20);
+                $file_name = substr(md5(time().mt_rand(10000,99999)),10,8);
+                $file_newname = $file_name.'_'.substr(rtrim($file_info[0],'"'),-20);
 
                 //存入文件夹
-                $image=$response->getBody();
-                is_dir('wx_media/voice')or mkdir('wx_media/voice',0777,true);
-                file_put_contents("wx_media/voice/".$file_name."",$image,FILE_APPEND);
+                $voice=$response->getBody();
+                $wx_voice_path = 'wx_media/vocie/'.$file_newname;
+                $rr = Storage::disk('local')->put($wx_voice_path,$voice);
+                var_dump($rr);
+
+                //语音信息入库
+                $userInfo=$this->getUserInfo($openid);
+                $info=[
+                    'openid'=>$userInfo['openid'],
+                    'create_time'  => time(),
+                    'msg_type'  => 'voice',
+                    'voice_path'=>$wx_voice_path
+                ];
+                $res=DB::table('wx_voice')->insert($info);
+                if($res){
+                    echo '语音信息入库成功';
+                }else{
+                    echo '语音信息入库失败';
+                }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'说话大点声 '.']]></Content></xml>';
 
             }
