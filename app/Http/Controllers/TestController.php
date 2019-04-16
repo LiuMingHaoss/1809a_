@@ -72,12 +72,25 @@ class TestController extends Controller
                     $city=explode('＋',$Content)[0];
                     $url='https://free-api.heweather.net/s6/weather/now?location='.$city.'&key=HE1904161034261454';
                     $arr=json_decode(file_get_contents($url),true);
-                    $cond_txt=$arr['HeWeather6']['0']['now']['cond_txt'];
-                    $fl=$arr['HeWeather6']['0']['now']['fl'];
-                    echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName>
+
+                    if(isset($arr['HeWeather6']['0']['now'])){
+                        $cond_txt=$arr['HeWeather6']['0']['now']['cond_txt'];
+                        $fl=$arr['HeWeather6']['0']['now']['fl'];
+                        echo '<xml>
+                                <ToUserName><![CDATA['.$openid.']]></ToUserName>
                                 <FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime>
                                 <MsgType><![CDATA[text]]></MsgType>
-                                <Content><![CDATA['. '城市:'.$city ."\n".'天气:'.$cond_txt."\n".'温度:'.$fl.']]></Content></xml>';
+                                <Content><![CDATA['. '城市:'.$city ."\n".'天气:'.$cond_txt."\n".'温度:'.$fl.']]></Content>
+                              </xml>';
+                    }else{
+                        echo '<xml>
+                                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                                <FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[text]]></MsgType>
+                                <Content><![CDATA['. '该城市不支持'.']]></Content>
+                              </xml>';
+                    }
+
 
                 }
 
