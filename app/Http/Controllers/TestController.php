@@ -51,6 +51,7 @@ class TestController extends Controller
                     'city'=>$userInfo['city'],
                     'subscribe_time'=>$userInfo['subscribe_time'],
                     'headimgurl'=>$userInfo['headimgurl'],
+                    'status'=>1
                 ];
 
                 //用户信息入库
