@@ -37,6 +37,7 @@ class TestController extends Controller
         if($event=='subscribe'){        //用户关注事件
             $local_user=DB::table('user')->where(['openid'=>$openid])->first();
             if($local_user){
+                DB::table('user')->where(['openid'=>$openid])->update(['status'=>1]);
                 echo  '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎回来 '. $local_user->nickname .']]></Content></xml>';
             }else{
                 //获取用户信息
@@ -61,6 +62,8 @@ class TestController extends Controller
                 }
                 echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '欢迎关注 '. $userInfo['nickname'] .']]></Content></xml>';
             }
+        }else if($event=='unsubscribe'){
+            DB::table('user')->where(['openid'=>$openid])->update(['status'=>0]);
         }else if(isset($data->MsgType)){
             if($data->MsgType=='text'){     //用户发送文字信息
 
