@@ -21,4 +21,7 @@ Route::get('/index/getaccess_token','TestController@getAccesstoken');
 //获取用户信息
 Route::get('/index/getUserInfo','TestController@getUserInfo');
 //自定义菜单
-Route::any('/index/getMenu','TestController@getMenu');
+Route::get('/index/getMenu','TestController@getMenu');
+//群发消息
+Route::get('/index/send','TestController@send');
+

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\wx_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +66,6 @@ class TestController extends Controller
 
                 $userInfo=$this->getUserInfo($openid);
                 $Content=$data->Content;
-                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$Content.']]></Content></xml>';
                 //自动回复天气
                 if(strpos($Content,'＋天气')){
                     //获取城市名称
@@ -106,6 +106,8 @@ class TestController extends Controller
                 }else{
                     echo '信息入库失败';
                 }
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$Content.']]></Content></xml>';
+
             }else if($data->MsgType=='image'){         //用户发送图片
                 //请求地址
                 $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
@@ -232,5 +234,31 @@ class TestController extends Controller
         $arr=json_decode($res_str,true);
         echo '<pre>';print_r($arr);
 
+    }
+    //消息群发
+    public function sendmsg($user_openid,$msg){
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token='.$this->getAccesstoken();
+        $send_arr=[
+          'touser'=>$user_openid  ,
+            'msgtype'=>'text',
+            'text'=>[
+                'content'=>$msg
+            ]
+        ];
+        $msg_json=json_encode($send_arr,JSON_UNESCAPED_UNICODE);
+        $clinet=new Client();
+        $response=$clinet->request('POST',$url,[
+            'body'=>$msg_json
+        ]);
+        return $response->getBody();
+    }
+
+    //群发
+    public function send(){
+        $user=wx_user::all()->toArray();
+        $user_openid=array_column($user,'openid');
+        $msg ='干啥呢';
+        $response=$this->sendmsg($user_openid,$msg);
+        echo $response;
     }
 }
