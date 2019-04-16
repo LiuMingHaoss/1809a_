@@ -62,8 +62,25 @@ class TestController extends Controller
             }
         }else if(isset($data->MsgType)){
             if($data->MsgType=='text'){     //用户发送文字信息
+
                 $userInfo=$this->getUserInfo($openid);
                 $Content=$data->Content;
+
+                //自动回复天气
+                if(strpos($Content,'＋天气')){
+                    //获取城市名称
+                    $city=explode('＋',$Content)[0];
+                    $url='https://free-api.heweather.net/s6/weather/now?location='.$city.'&key=HE1904161034261454';
+                    $arr=json_decode(file_get_contents($url),true);
+                    $cond_txt=$arr['HeWeather6']['0']['now']['cond_txt'];
+                    $fl=$arr['HeWeather6']['0']['now']['fl'];
+                    echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName>
+                                <FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[text]]></MsgType>
+                                <Content><![CDATA['. '城市： '.$city .'天气：'.$cond_txt.'温度：'.$fl.']]></Content></xml>';
+
+                }
+
                 $info=[
                   'openid'=>$userInfo['openid'],
                   'nickname'=>$userInfo['nickname'],
@@ -76,7 +93,6 @@ class TestController extends Controller
                 }else{
                     echo '信息入库失败';
                 }
-                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. '别bb了 '. $userInfo['nickname'] .']]></Content></xml>';
             }else if($data->MsgType=='image'){         //用户发送图片
                 //请求地址
                 $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getAccesstoken().'&media_id='.$data->MediaId;
