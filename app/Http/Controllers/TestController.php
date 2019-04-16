@@ -75,7 +75,7 @@ class TestController extends Controller
 
                     if(isset($arr['HeWeather6']['0']['now'])){
                         $cond_txt=$arr['HeWeather6']['0']['now']['cond_txt'];
-                        $fl=$arr['HeWeather6']['0']['now']['fl'];
+                        $fl=$arr['HeWeather6']['0']['now']['tmp'];
                         echo '<xml>
                                 <ToUserName><![CDATA['.$openid.']]></ToUserName>
                                 <FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime>
