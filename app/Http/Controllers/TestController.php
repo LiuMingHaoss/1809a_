@@ -65,7 +65,7 @@ class TestController extends Controller
 
                 $userInfo=$this->getUserInfo($openid);
                 $Content=$data->Content;
-
+                echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$Content.']]></Content></xml>';
                 //自动回复天气
                 if(strpos($Content,'＋天气')){
                     //获取城市名称
