@@ -77,7 +77,7 @@ class TestController extends Controller
                     echo '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName>
                                 <FromUserName><![CDATA['.$wx_id.']]></FromUserName><CreateTime>'.time().'</CreateTime>
                                 <MsgType><![CDATA[text]]></MsgType>
-                                <Content><![CDATA['. '城市： '.$city .'天气：'.$cond_txt.'温度：'.$fl.']]></Content></xml>';
+                                <Content><![CDATA['. '城市:'.$city ."\n".'天气:'.$cond_txt.'\n'.'温度:'.$fl.']]></Content></xml>';
 
                 }
 
