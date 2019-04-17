@@ -261,7 +261,7 @@ class TestController extends Controller
     public function send(){
         $user=wx_user::all()->toArray();
         $user_openid=array_column($user,'openid');
-        $msg ='你好';
+        $msg ='hellow  aa';
         $response=$this->sendmsg($user_openid,$msg);
         echo $response;
     }
