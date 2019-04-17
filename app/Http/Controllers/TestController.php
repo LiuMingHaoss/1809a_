@@ -71,9 +71,9 @@ class TestController extends Controller
                 $userInfo=$this->getUserInfo($openid);
                 $Content=$data->Content;
                 //自动回复天气
-                if(strpos($Content,'＋天气')){
+                if(strpos($Content,'+天气')){
                     //获取城市名称
-                    $city=explode('＋',$Content)[0];
+                    $city=explode('+',$Content)[0];
                     $url='https://free-api.heweather.net/s6/weather/now?location='.$city.'&key=HE1904161034261454';
                     $arr=json_decode(file_get_contents($url),true);
 
@@ -261,7 +261,7 @@ class TestController extends Controller
     public function send(){
         $user=wx_user::all()->toArray();
         $user_openid=array_column($user,'openid');
-        $msg ='干啥呢';
+        $msg ='你好';
         $response=$this->sendmsg($user_openid,$msg);
         echo $response;
     }
