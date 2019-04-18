@@ -146,7 +146,7 @@ class WxPayController extends Controller
         return $buff;
     }
     /**
-     * 微信支付回调
+     * 微信支付回调1
      */
     public function notify()
     {
