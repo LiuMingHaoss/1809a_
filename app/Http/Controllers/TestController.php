@@ -100,7 +100,7 @@ class TestController extends Controller
                     $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                     foreach($goodsInfo as $k=>$v){
                         $img_url='http://goods.img.com/'.$v->goods_img;
-
+                        $desc_url='http://1809liuminghao.comcto.com/';
                         echo '
                         <xml>
                           <ToUserName><![CDATA['.$openid.']]></ToUserName>
@@ -113,7 +113,7 @@ class TestController extends Controller
                               <Title><![CDATA['.$v->goods_name.']]></Title>
                               <Description><![CDATA['.$v->goods_desc.']]></Description>
                               <PicUrl><![CDATA['.$img_url.']]></PicUrl>
-                              <Url><![CDATA['/']]></Url>
+                              <Url><![CDATA['.$desc_url.']]></Url>
                             </item>
                           </Articles>
                         </xml>';
