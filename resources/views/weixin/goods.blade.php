@@ -96,8 +96,8 @@
         <td>商品价格</td>
     </tr>
     <tr>
-        <td>{{$goodsInfo['goods_name']}}</td>
-        <td>{{$goodsInfo['goods_price']}}</td>
+        <td>{{$goodsInfo->goods_name}}</td>
+        <td>{{$goodsInfo->goods_price}}</td>
     </tr>
 </table>
 

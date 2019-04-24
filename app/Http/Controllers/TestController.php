@@ -293,7 +293,7 @@ class TestController extends Controller
     //商品详情
     public function goodsdesc(){
         $goods_id=$_GET['goods_id'];
-        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first()->toArray();
+        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first();
         return view('weixin.goods',['goodsInfo'=>$goodsInfo]);
     }
 }
