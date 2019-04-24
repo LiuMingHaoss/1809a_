@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 class TestController extends Controller
 {
     //
@@ -295,6 +295,26 @@ class TestController extends Controller
         $goods_id=$_GET['goods_id'];
         $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first();
 
-        return view('weixin.goods',['goodsInfo'=>$goodsInfo]);
+        //计算签名
+        $nonceStr=Str::random(10);
+        $ticket = getTicket();
+        $timestamp=time();
+        $current_url=$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+//        echo 'nonceStr:'.$nonceStr;echo '</br>';
+//        echo 'ticket:'.$ticket;echo '</br>';
+//        echo 'timestamp:'.$timestamp;echo '</br>';
+//        echo 'current_url:'.$current_url;echo '</br>';
+
+        $string = "jsapi_ticket=$ticket&noncestr=$nonceStr&timestamp=$timestamp&url=$current_url";
+        $sign=sha1($string);
+
+        $js_config=[
+            'appId'=>env('WX_APPID'),   //公众号appid
+            'timestamp'=>$timestamp,            //时间戳
+            'nonceStr'=>$nonceStr,    //随机字符串
+            'signature'=>$sign,                //签名
+
+        ];
+        return view('weixin.goods',['jsconfig'=>$js_config]);
     }
 }
