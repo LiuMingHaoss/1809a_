@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         'http://1809liuminghao.comcto.com/index/*',
-        '/weixin/pay/notify'
+        '/weixin/pay/notify',
+        '/index'
     ];
 }
