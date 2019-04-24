@@ -96,6 +96,28 @@ class TestController extends Controller
                     }
 
 
+                }else if($Content=='最新商品'){
+                    $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
+                    foreach($goodsInfo as $k=>$v){
+                        echo '
+                        <xml>
+                          <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                          <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                          <CreateTime>'.time().'</CreateTime>
+                          <MsgType><![CDATA[news]]></MsgType>
+                          <ArticleCount>1</ArticleCount>
+                          <Articles>
+                            <item>
+                              <Title><![CDATA['.$v->goods_name.']]></Title>
+                              <Description><![CDATA['.$v->goods_desc.']]></Description>
+                              <PicUrl><![CDATA[/goodsImg/'.$v->goods_img.']]></PicUrl>
+                              <Url><![CDATA[/info]]></Url>
+                            </item>
+                          </Articles>
+                        </xml>';
+                    }
+
+
                 }
 
                 $info=[
