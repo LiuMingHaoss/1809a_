@@ -29,5 +29,6 @@ Route::get('/index/send','TestController@send');
 
 //微信支付
 Route::get('/weixin/pay/test','Weixin\WxPayController@test');
+Route::get('/weixin/goods','TestController@goodsdesc');
 Route::post('/weixin/pay/notify','Weixin\WxPayController@notify');       //微信支付回调地址
 

@@ -100,7 +100,7 @@ class TestController extends Controller
                     $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                     foreach($goodsInfo as $k=>$v){
                         $img_url='http://1809liuminghao.comcto.com/goodsImg/'.$v->goods_img;
-                        $desc_url='http://1809liuminghao.comcto.com/';
+                        $desc_url='http://1809liuminghao.comcto.com/weixin/goods?goods_id='.$v->goods_id;
                         echo '
                         <xml>
                           <ToUserName><![CDATA['.$openid.']]></ToUserName>
@@ -288,5 +288,12 @@ class TestController extends Controller
         $msg ='hellow  aa';
         $response=$this->sendmsg($user_openid,$msg);
         echo $response;
+    }
+
+    //商品详情
+    public function goodsdesc(){
+        $goods_id=$_GET['goods_id'];
+        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first()->toArray();
+        return view('weixin.goods',['goodsInfo'=>$goodsInfo]);
     }
 }
