@@ -99,6 +99,8 @@ class TestController extends Controller
                 }else if($Content=='最新商品'){
                     $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                     foreach($goodsInfo as $k=>$v){
+                        $img_url='http://goods.img.com/'.$v->goods_img;
+                        echo $img_url;
                         echo '
                         <xml>
                           <ToUserName><![CDATA['.$openid.']]></ToUserName>
@@ -110,7 +112,7 @@ class TestController extends Controller
                             <item>
                               <Title><![CDATA['.$v->goods_name.']]></Title>
                               <Description><![CDATA['.$v->goods_desc.']]></Description>
-                              <PicUrl><![CDATA[/goodsImg/'.$v->goods_img.']]></PicUrl>
+                              <PicUrl><![CDATA['.$img_url.']]></PicUrl>
                               <Url><![CDATA[/info]]></Url>
                             </item>
                           </Articles>
