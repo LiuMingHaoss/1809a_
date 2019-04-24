@@ -99,7 +99,7 @@ class TestController extends Controller
                 }else if($Content=='最新商品'){
                     $goodsInfo=DB::table('shop_goods')->orderBy('create_time','desc')->limit(5)->get()->toArray();
                     foreach($goodsInfo as $k=>$v){
-                        $img_url='http://goods.img.com/'.$v->goods_img;
+                        $img_url='http://1809liuminghao.comcto.com/goodsImg'.$v->goods_img;
                         $desc_url='http://1809liuminghao.comcto.com/';
                         echo '
                         <xml>
