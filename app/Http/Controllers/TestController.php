@@ -292,9 +292,7 @@ class TestController extends Controller
 
     //商品详情
     public function goodsdesc(){
-        $goods_id=$_GET['goods_id'];
-        $goodsInfo=DB::table('shop_goods')->where('goods_id',$goods_id)->first();
-
+        
         //计算签名
         $nonceStr=Str::random(10);
         $ticket = getTicket();
@@ -315,7 +313,6 @@ class TestController extends Controller
             'signature'=>$sign,                //签名
 
         ];
-        var_dump($js_config);
         return view('weixin.goods',['jsconfig'=>$js_config]);
     }
 }
