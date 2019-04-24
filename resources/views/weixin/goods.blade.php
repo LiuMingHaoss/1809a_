@@ -120,7 +120,7 @@
             wx.updateAppMessageShareData({
                 title: '商品详情了解一下', // 分享标题
                 desc: '商品详情', // 分享描述
-                link: '1809liuminghao.comcto.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                link: 'http://1809liuminghao.comcto.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: 'http://1809liuminghao.comcto.com/goodsImg/20190220\\3a7b8dea4c6c14b2aa0990a2a2f0388e.jpg', // 分享图标
                 success: function () {
                     // 设置成功
