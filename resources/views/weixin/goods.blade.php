@@ -93,7 +93,7 @@
     </div>
 </div>
 
-
+<button id="btn">选择图片</button>
 <script src="/js/jquery/jquery-1.12.4.min.js"></script>
 <script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script>
@@ -103,10 +103,20 @@
         timestamp:"{{$jsconfig['timestamp']}}" , // 必填，生成签名的时间戳
         nonceStr:"{{$jsconfig['nonceStr']}}", // 必填，生成签名的随机串
         signature:"{{$jsconfig['signature']}}",// 必填，签名
-        jsApiList: ['updateAppMessageShareData'] // 必填，需要使用的JS接口列表
+        jsApiList: ['updateAppMessageShareData','chooseImage'] // 必填，需要使用的JS接口列表
     });
     wx.ready(function(){
-
+            $('#btn').click(function(){
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        alert(localIds);
+                    }
+                });
+            })
             wx.updateAppMessageShareData({
                 title: '商品详情了解一下', // 分享标题
                 desc: '商品详情', // 分享描述

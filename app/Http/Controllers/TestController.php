@@ -292,7 +292,7 @@ class TestController extends Controller
 
     //商品详情
     public function goodsdesc(){
-        
+
         //计算签名
         $nonceStr=Str::random(10);
         $ticket = getTicket();
