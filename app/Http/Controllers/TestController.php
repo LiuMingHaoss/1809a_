@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Model\Goods;
 class TestController extends Controller
 {
     //
