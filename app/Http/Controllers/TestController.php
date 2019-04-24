@@ -315,6 +315,7 @@ class TestController extends Controller
             'signature'=>$sign,                //签名
 
         ];
+        var_dump($js_config);
         return view('weixin.goods',['jsconfig'=>$js_config]);
     }
 }
